@@ -1,0 +1,69 @@
+name: 'Hello World'
+description: 'Greet someone'
+
+inputs:
+  kustomize_version:
+    description: kustomize version
+    required: false
+    default: "4.5.5"
+  kubeconform_version:
+    description: kubeconform version
+    required: false
+    default: "0.4.13"
+  kube-linter_version:
+    description: kube-linter version
+    required: false
+    default: "0.4.13"
+  kustomize_build_input:
+    description: 'Input parameter for kustomize build'
+    required: true
+  kubeconform_flags:
+    description: flags to supply to kubeconform
+    required: false
+  kube-linter_flags:
+    description: flags to supply to kube-linter lint
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install kustomize
+      uses: giantswarm/install-binary-action@v1.0.0
+      with:
+        binary: "kustomize"
+        version: ${{ inputs.kustomize_version }}
+        download_url: "https://github.com/kubernetes-sigs/${binary}/releases/download/${binary}%2Fv${version}/${binary}_v${version}_linux_amd64.tar.gz"
+        tarball_binary_path: "${binary}"
+        smoke_test: "${binary} version"
+
+    - name: Install kubeconform
+      uses: giantswarm/install-binary-action@v1.0.0
+      with:
+        binary: "kubeconform"
+        version: ${{ inputs.kubeconform_version }}
+        download_url: "https://github.com/yannh/kubeconform/releases/download/v${version}/kubeconform-linux-amd64.tar.gz"
+        tarball_binary_path: "${binary}"
+        smoke_test: "${binary} -v"
+
+    - name: Install kube-linter
+      uses: giantswarm/install-binary-action@v1.0.0
+      with:
+        binary: "kube-linter"
+        version: ${{ inputs.kube-linter_version }}
+        download_url: "https://github.com/stackrox/kube-linter/releases/download/${version}/kube-linter-linux.tar.gz"
+        tarball_binary_path: "${binary}"
+        smoke_test: "${binary} version"
+
+    - name: Build manifests
+      run: |
+        echo "target_dir=$(mktemp -d -q --suffix -kube-check-action)" >> $GITHUB_ENV
+        mkdir ../kube-check-action_manifests
+        kustomize build "${{ inputs.kustomize_build_input }}" --output "${{ env.target_dir }}/manifest.yaml"
+
+    - name: Run kubeconform
+      run: |
+        kubeconform ${{ inputs.kubeconform_flags }} "${{ env.target_dir }}"
+
+    - name: Run kube-linter
+      run: |
+        kube-linter lint ${{ inputs.kube-linter_flags }} "${{ env.target_dir }}"
