@@ -58,7 +58,7 @@ runs:
       shell: bash
       run: |
         target_dir="$(mktemp -d -q --suffix -kube-check-action)"
-        echo "$target_dir" >> $GITHUB_ENV
+        echo "target_dir=$target_dir" >> $GITHUB_ENV
         kustomize build "${{ inputs.kustomize_build_input }}" --output "${target_dir}/manifest.yaml"
 
     - name: Run kubeconform
