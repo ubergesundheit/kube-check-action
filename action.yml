@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'kube-check-action'
+description: 'Execute kustomize build and use kubeconform and kube-linter for checking'
 
 inputs:
   kustomize_version:
