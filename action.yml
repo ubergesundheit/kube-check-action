@@ -55,15 +55,18 @@ runs:
         smoke_test: "${binary} version"
 
     - name: Build manifests
+      shell: bash
       run: |
         echo "target_dir=$(mktemp -d -q --suffix -kube-check-action)" >> $GITHUB_ENV
         mkdir ../kube-check-action_manifests
         kustomize build "${{ inputs.kustomize_build_input }}" --output "${{ env.target_dir }}/manifest.yaml"
 
     - name: Run kubeconform
+      shell: bash
       run: |
         kubeconform ${{ inputs.kubeconform_flags }} "${{ env.target_dir }}"
 
     - name: Run kube-linter
+      shell: bash
       run: |
         kube-linter lint ${{ inputs.kube-linter_flags }} "${{ env.target_dir }}"
