@@ -5,15 +5,15 @@ inputs:
   kustomize_version:
     description: kustomize version
     required: false
-    default: "4.5.5"
+    default: "4.5.7"
   kubeconform_version:
     description: kubeconform version
     required: false
-    default: "0.4.13"
+    default: "0.5.0"
   kube-linter_version:
     description: kube-linter version
     required: false
-    default: "0.3.0"
+    default: "0.5.1"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
