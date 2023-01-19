@@ -28,7 +28,7 @@ runs:
   using: "composite"
   steps:
     - name: Install kustomize
-      uses: giantswarm/install-binary-action@v1.0.0
+      uses: giantswarm/install-binary-action@v1.1.0
       with:
         binary: "kustomize"
         version: ${{ inputs.kustomize_version }}
@@ -37,7 +37,7 @@ runs:
         smoke_test: "${binary} version"
 
     - name: Install kubeconform
-      uses: giantswarm/install-binary-action@v1.0.0
+      uses: giantswarm/install-binary-action@v1.1.0
       with:
         binary: "kubeconform"
         version: ${{ inputs.kubeconform_version }}
@@ -46,7 +46,7 @@ runs:
         smoke_test: "${binary} -v"
 
     - name: Install kube-linter
-      uses: giantswarm/install-binary-action@v1.0.0
+      uses: giantswarm/install-binary-action@v1.1.0
       with:
         binary: "kube-linter"
         version: ${{ inputs.kube-linter_version }}
