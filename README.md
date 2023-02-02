@@ -58,3 +58,7 @@ jobs:
           kustomize_build_input: deployment/production
           kubeconform_flags: "-strict -kubernetes-version 1.22.7"
 ```
+
+## Validating sops encrypted Secrets
+
+Add `-schema-location 'https://raw.githubusercontent.com/ubergesundheit/kube-check-action/main/kubeconform-schemas/{{.ResourceKind}}.json' -schema-location default` to your `kubeconform_flags`
