@@ -9,11 +9,11 @@ inputs:
   kubeconform_version:
     description: kubeconform version
     required: false
-    default: "0.5.0"
+    default: "0.6.1"
   kube-linter_version:
     description: kube-linter version
     required: false
-    default: "0.5.1"
+    default: "0.6.0"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
