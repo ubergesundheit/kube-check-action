@@ -13,7 +13,11 @@ inputs:
   kube-linter_version:
     description: kube-linter version
     required: false
-    default: "0.6.0"
+    default: "0.6.1"
+  pluto_version:
+    description: pluto version
+    required: false
+    default: "5.16.0"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
@@ -50,7 +54,16 @@ runs:
       with:
         binary: "kube-linter"
         version: ${{ inputs.kube-linter_version }}
-        download_url: "https://github.com/stackrox/kube-linter/releases/download/${version}/kube-linter-linux.tar.gz"
+        download_url: "https://github.com/stackrox/kube-linter/releases/download/v${version}/kube-linter-linux.tar.gz"
+        tarball_binary_path: "${binary}"
+        smoke_test: "${binary} version"
+        
+    - name: Install pluto
+      uses: giantswarm/install-binary-action@v1.1.0
+      with:
+        binary: "pluto"
+        version: ${{ inputs.pluto_version }}
+        download_url: "https://github.com/FairwindsOps/pluto/releases/download/v${version}/pluto_${version}_linux_amd64.tar.gz"
         tarball_binary_path: "${binary}"
         smoke_test: "${binary} version"
 
@@ -70,3 +83,8 @@ runs:
       shell: bash
       run: |
         kube-linter lint ${{ inputs.kube-linter_flags }} "${{ env.target_dir }}"
+
+    - name: Use pluto
+      shell: bash
+      run: |
+        pluto --no-footer detect-files -d "${{ env.target_dir }}"
