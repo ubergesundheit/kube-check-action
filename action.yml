@@ -75,5 +75,6 @@ runs:
       uses: FairwindsOps/pluto/github-action@master
 
     - name: Use pluto
+      shell: bash
       run: |
         pluto detect-files -d "${{ env.target_dir }}"
