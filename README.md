@@ -4,7 +4,7 @@ GitHub composite action to run kustomize, kubeconform and kube-linter
 
 ## Inputs
 
-See `action,yml` for up to date documentation.
+See `action.yml` for up to date documentation.
 
 ```yaml
 inputs:
