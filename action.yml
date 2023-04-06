@@ -54,7 +54,7 @@ runs:
       with:
         binary: "kube-linter"
         version: ${{ inputs.kube-linter_version }}
-        download_url: "https://github.com/stackrox/kube-linter/releases/download/${version}/kube-linter-linux.tar.gz"
+        download_url: "https://github.com/stackrox/kube-linter/releases/download/v${version}/kube-linter-linux.tar.gz"
         tarball_binary_path: "${binary}"
         smoke_test: "${binary} version"
         
