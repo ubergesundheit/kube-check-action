@@ -70,3 +70,10 @@ runs:
       shell: bash
       run: |
         kube-linter lint ${{ inputs.kube-linter_flags }} "${{ env.target_dir }}"
+
+    - name: Download Pluto
+      uses: FairwindsOps/pluto/github-action@master
+
+    - name: Use pluto
+      run: |
+        pluto detect-files -d "${{ env.target_dir }}"
