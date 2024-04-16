@@ -11,7 +11,7 @@ inputs:
   kustomize_version:
     description: kustomize version
     required: false
-    default: "5.0.3
+    default: "5.4.0"
   kubeconform_version:
     description: kubeconform version
     required: false
@@ -19,11 +19,11 @@ inputs:
   kube-linter_version:
     description: kube-linter version
     required: false
-    default: "0.6.5"
+    default: "0.6.8"
   pluto_version:
     description: pluto version
     required: false
-    default: "5.18.6"
+    default: "5.19.0"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
