@@ -5,19 +5,19 @@ inputs:
   kustomize_version:
     description: kustomize version
     required: false
-    default: "4.5.7"
+    default: "5.4.0"
   kubeconform_version:
     description: kubeconform version
     required: false
-    default: "0.6.1"
+    default: "0.6.4"
   kube-linter_version:
     description: kube-linter version
     required: false
-    default: "0.6.1"
+    default: "0.6.8"
   pluto_version:
     description: pluto version
     required: false
-    default: "5.16.0"
+    default: "5.19.0"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
@@ -32,7 +32,7 @@ runs:
   using: "composite"
   steps:
     - name: Install kustomize
-      uses: giantswarm/install-binary-action@v1.1.0
+      uses: giantswarm/install-binary-action@v2.0.0
       with:
         binary: "kustomize"
         version: ${{ inputs.kustomize_version }}
@@ -41,7 +41,7 @@ runs:
         smoke_test: "${binary} version"
 
     - name: Install kubeconform
-      uses: giantswarm/install-binary-action@v1.1.0
+      uses: giantswarm/install-binary-action@v2.0.0
       with:
         binary: "kubeconform"
         version: ${{ inputs.kubeconform_version }}
@@ -50,7 +50,7 @@ runs:
         smoke_test: "${binary} -v"
 
     - name: Install kube-linter
-      uses: giantswarm/install-binary-action@v1.1.0
+      uses: giantswarm/install-binary-action@v2.0.0
       with:
         binary: "kube-linter"
         version: ${{ inputs.kube-linter_version }}
@@ -59,7 +59,7 @@ runs:
         smoke_test: "${binary} version"
         
     - name: Install pluto
-      uses: giantswarm/install-binary-action@v1.1.0
+      uses: giantswarm/install-binary-action@v2.0.0
       with:
         binary: "pluto"
         version: ${{ inputs.pluto_version }}
