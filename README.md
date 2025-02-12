@@ -1,6 +1,6 @@
 # kube-check-action
 
-GitHub composite action to run kustomize, kubeconform and kube-linter
+GitHub composite action to run kustomize, kubeconform, kube-linter and pluto
 
 ## Inputs
 
@@ -11,19 +11,19 @@ inputs:
   kustomize_version:
     description: kustomize version
     required: false
-    default: "5.4.0"
+    default: "5.6.0"
   kubeconform_version:
     description: kubeconform version
     required: false
-    default: "0.6.4"
+    default: "0.6.7"
   kube-linter_version:
     description: kube-linter version
     required: false
-    default: "0.6.8"
+    default: "0.7.1"
   pluto_version:
     description: pluto version
     required: false
-    default: "5.19.0"
+    default: "5.21.1"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
@@ -51,10 +51,10 @@ on:
 jobs:
   check:
     name: Lint kubernetes manifests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build and validate kustomizations
         uses: ubergesundheit/kube-check-action@main
