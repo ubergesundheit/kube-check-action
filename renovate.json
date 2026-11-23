@@ -2,5 +2,34 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "dependencyDashboard": true,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update Kubernetes validation tools in action.yml",
+      "managerFilePatterns": [
+        "/(^|/)action\\.yml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) packageName=(?<packageName>\\S+)\\s+default:\\s*[\"']?(?<currentValue>[^\"'\\s]+)"
+      ],
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+(?:[-+].*)?)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Group Kubernetes validation tool updates",
+      "matchPackageNames": [
+        "kubernetes-sigs/kustomize",
+        "yannh/kubeconform",
+        "stackrox/kube-linter",
+        "FairwindsOps/pluto"
+      ],
+      "groupName": "Kubernetes validation tools",
+      "groupSlug": "kubernetes-validation-tools",
+      "ignoreUnstable": true
+    }
   ]
 }

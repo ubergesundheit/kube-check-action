@@ -5,19 +5,23 @@ inputs:
   kustomize_version:
     description: kustomize version
     required: false
-    default: "5.6.0"
+    # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize packageName=kubernetes-sigs/kustomize
+    default: "5.8.3"
   kubeconform_version:
     description: kubeconform version
     required: false
-    default: "0.6.7"
+    # renovate: datasource=github-releases depName=yannh/kubeconform packageName=yannh/kubeconform
+    default: "0.8.0"
   kube-linter_version:
     description: kube-linter version
     required: false
-    default: "0.7.1"
+    # renovate: datasource=github-releases depName=stackrox/kube-linter packageName=stackrox/kube-linter
+    default: "0.8.3"
   pluto_version:
     description: pluto version
     required: false
-    default: "5.21.1"
+    # renovate: datasource=github-releases depName=FairwindsOps/pluto packageName=FairwindsOps/pluto
+    default: "5.24.4"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
