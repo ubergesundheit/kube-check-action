@@ -91,4 +91,4 @@ runs:
     - name: Use pluto
       shell: bash
       run: |
-        pluto --no-footer detect-files -d "${{ env.target_dir }}"
+        pluto detect-files -d "${{ env.target_dir }}"
