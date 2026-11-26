@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
@@ -46,14 +46,14 @@ jobs:
         uses: $/
         with:
           kustomize_build_input: /tmp/kustomize-test
-          kubeconform_flags: "-strict -kubernetes-version 1.22.7" # renovate: datasource=github-releases depName=kubernetes/kubernetes
+          kubeconform_flags: "-strict -kubernetes-version 1.37.3" # renovate: datasource=github-releases depName=kubernetes/kubernetes
 
   test-sops:
     name: Test SOPS schema
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
