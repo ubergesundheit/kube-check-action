@@ -46,7 +46,7 @@ jobs:
         uses: $/
         with:
           kustomize_build_input: /tmp/kustomize-test
-          kubeconform_flags: "-strict -kubernetes-version 1.22.7" # renovate: datasource=github-releases depName=kubernetes/kubernetes
+          kubeconform_flags: "-strict -kubernetes-version 1.37.3" # renovate: datasource=github-releases depName=kubernetes/kubernetes
 
   test-sops:
     name: Test SOPS schema
