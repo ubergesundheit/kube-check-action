@@ -1,0 +1,95 @@
+name: Test action
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Create test kustomization
+        run: |
+          mkdir -p /tmp/kustomize-test
+          cat > /tmp/kustomize-test/kustomization.yaml << 'EOF'
+          apiVersion: kustomize.config.k8s.io/v1beta1
+          kind: Kustomization
+          resources:
+            - configmap.yaml
+          EOF
+          cat > /tmp/kustomize-test/configmap.yaml << 'EOF'
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: test-config
+            namespace: default
+          data:
+            key: value
+          EOF
+
+      - name: Run kube-check-action
+        uses: $/
+        with:
+          kustomize_build_input: /tmp/kustomize-test
+          kubeconform_flags: "-strict -kubernetes-version 1.22.7" # renovate: datasource=github-releases depName=kubernetes/kubernetes
+
+  test-sops:
+    name: Test SOPS schema
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+
+      - name: Create SOPS secret kustomization
+        run: |
+          mkdir -p /tmp/kustomize-sops-test
+          cat > /tmp/kustomize-sops-test/kustomization.yaml << 'EOF'
+          apiVersion: kustomize.config.k8s.io/v1beta1
+          kind: Kustomization
+          resources:
+            - secret.yaml
+          EOF
+          cat > /tmp/kustomize-sops-test/secret.yaml << 'EOF'
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: test-secret
+            namespace: default
+          type: Opaque
+          sops:
+            kms: []
+            gcp_kms: []
+            azure_kv: []
+            hc_vault: []
+            age: []
+            lastmodified: "2026-01-01T00:00:00Z"
+            mac: ENC[AES256_GCM,data:test,iv:test,tag:test,type:str]
+            pgp: []
+            encrypted_regex: ^(data|stringData)$
+            version: 3.9.0
+          data:
+            key: dmFsdWU=
+          EOF
+
+      - name: Run kube-check-action with SOPS schema
+        uses: $/
+        with:
+          kustomize_build_input: /tmp/kustomize-sops-test
+          kubeconform_flags: "-strict -kubernetes-version 1.22.7 -schema-location '${{ github.workspace }}/kubeconform-schemas/{{ .ResourceKind }}.json' -schema-location default" # renovate: datasource=github-releases depName=kubernetes/kubernetes

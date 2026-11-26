@@ -4,6 +4,8 @@
     "config:recommended"
   ],
   "dependencyDashboard": true,
+  "automerge": true,
+  "platformAutomerge": true,
   "customManagers": [
     {
       "customType": "regex",
@@ -16,6 +18,20 @@
       ],
       "versioningTemplate": "semver",
       "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+(?:[-+].*)?)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Kubernetes version in tests",
+      "managerFilePatterns": [
+        "/(^|/)README\\.md$/",
+        "/\\.github/workflows/.*\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\s*.*kubernetes-version\\s+(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "kubernetes-version\\s+(?<currentValue>\\d+\\.\\d+\\.\\d+)\"?\\s*# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)"
+      ],
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$"
     }
   ],
   "packageRules": [
@@ -30,6 +46,13 @@
       "groupName": "Kubernetes validation tools",
       "groupSlug": "kubernetes-validation-tools",
       "ignoreUnstable": true
+    },
+    {
+      "description": "Automerge all PRs once CI is green",
+      "matchPackageNames": [
+        "*"
+      ],
+      "automerge": true
     }
   ]
 }
