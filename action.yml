@@ -21,7 +21,7 @@ inputs:
     description: pluto version
     required: false
     # renovate: datasource=github-releases depName=FairwindsOps/pluto packageName=FairwindsOps/pluto
-    default: "5.24.5"
+    default: "5.24.6"
   kustomize_build_input:
     description: 'Input parameter for kustomize build'
     required: true
